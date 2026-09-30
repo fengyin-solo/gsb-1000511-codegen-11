@@ -12,7 +12,7 @@ router = APIRouter(prefix="/api/reserve", tags=["储量估算"])
 
 service = ReserveService()
 
-LIST_FIELDS = ["块段编号", "矿体名称", "面积", "厚度", "品位", "矿石体重", "资源类别", "块段状态"]
+LIST_FIELDS = ["块段编号", "矿体名称", "项目属性", "面积", "厚度", "品位", "矿石体重", "资源类别", "块段状态", "公式版本", "签发批次", "签发代数", "矿石量", "金属量"]
 STATUSES = ["待估算", "已估算", "待评审", "已认定"]
 
 
@@ -28,6 +28,13 @@ def list_entries(
         raise HTTPException(status_code=400, detail="每页最多 200 条，请缩小分页范围")
     items, total = service.list_entries(keyword=keyword, status=status, page=page, size=size)
     return PageResult(items=items, total=total, page=page, size=size)
+
+
+@router.get("/export")
+def export_entries() -> dict[str, Any]:
+    """导出储量估算清单：返回当前过滤条件下的全量数据。"""
+    items, total = service.list_entries(page=1, size=10000)
+    return {"module": "reserve", "total": total, "items": items}
 
 
 @router.get("/{entry_id}", response_model=dict)
@@ -56,10 +63,3 @@ def run_action(entry_id: int, payload: EntryPayload) -> ActionResult:
     if entry is None:
         return ActionResult(ok=False, message=message)
     return ActionResult(ok=True, message=message, entry=entry)
-
-
-@router.get("/export")
-def export_entries() -> dict[str, Any]:
-    """导出储量估算清单：返回当前过滤条件下的全量数据。"""
-    items, total = service.list_entries(page=1, size=10000)
-    return {"module": "reserve", "total": total, "items": items}

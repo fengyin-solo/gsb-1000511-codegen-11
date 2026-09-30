@@ -16,6 +16,7 @@ from app.routers import mapping as router_mapping
 from app.routers import survey_point as router_survey_point
 from app.routers import drilling_log as router_drilling_log
 from app.routers import reserve as router_reserve
+from app.routers import reserve_batch as router_reserve_batch
 from app.routers import sample_registry as router_sample_registry
 from app.routers import equipment as router_equipment
 from app.routers import hydro as router_hydro
@@ -25,4 +26,4 @@ from app.routers import remote as router_remote
 from app.routers import mineral as router_mineral
 from app.routers import environmental as router_environmental
 
-ROUTERS = [router_borehole, router_core, router_stratigraphy, router_geophysics, router_geochem, router_assay, router_mapping, router_survey_point, router_drilling_log, router_reserve, router_sample_registry, router_equipment, router_hydro, router_section, router_geological_report, router_remote, router_mineral, router_environmental]
+ROUTERS = [router_borehole, router_core, router_stratigraphy, router_geophysics, router_geochem, router_assay, router_mapping, router_survey_point, router_drilling_log, router_reserve, router_reserve_batch, router_sample_registry, router_equipment, router_hydro, router_section, router_geological_report, router_remote, router_mineral, router_environmental]
